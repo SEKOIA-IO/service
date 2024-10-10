@@ -97,6 +97,7 @@ const (
 	optionOpenRCScript  = "OpenRCScript"
 
 	optionLogDirectory = "LogDirectory"
+	optionRestartSec   = "RestartSec"
 )
 
 // Status represents service status as an byte value
@@ -213,6 +214,8 @@ func New(i Interface, c *Config) (Service, error) {
 //
 //   - LimitNOFILE   int    (-1)               - Maximum open files (ulimit -n)
 //     (https://serverfault.com/questions/628610/increasing-nproc-for-processes-launched-by-systemd-on-centos-7)
+//
+//   - RestartSec    string ("120")             - Time to sleep before restarting a service.
 //
 //   - Windows
 //
