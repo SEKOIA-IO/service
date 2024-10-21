@@ -173,6 +173,8 @@ func (s *systemd) Install() error {
 		LogOutput            bool
 		LogDirectory         string
 		RestartSec           string
+		StartLimitInterval   string
+		StartLimitBurst      int
 	}{
 		s.Config,
 		path,
@@ -185,6 +187,8 @@ func (s *systemd) Install() error {
 		s.Option.bool(optionLogOutput, optionLogOutputDefault),
 		s.Option.string(optionLogDirectory, defaultLogDirectory),
 		s.Option.string(optionRestartSec, "120s"),
+		s.Option.string(optionStartLimitInterval, "5"),
+		s.Option.int(optionStartLimitBurst, 10),
 	}
 
 	err = s.template().Execute(f, to)
@@ -307,8 +311,8 @@ ConditionFileIsExecutable={{.Path|cmdEscape}}
 {{$dep}} {{end}}
 
 [Service]
-StartLimitInterval=5
-StartLimitBurst=10
+{{if .StartLimitInterval}}StartLimitInterval={{.StartLimitInterval}}{{end}}
+{{if .StartLimitBurst}}StartLimitBurst={{.StartLimitBurst}}{{end}}
 ExecStart={{.Path|cmdEscape}}{{range .Arguments}} {{.|cmd}}{{end}}
 {{if .ChRoot}}RootDirectory={{.ChRoot|cmd}}{{end}}
 {{if .WorkingDirectory}}WorkingDirectory={{.WorkingDirectory|cmdEscape}}{{end}}

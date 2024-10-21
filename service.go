@@ -96,8 +96,10 @@ const (
 	optionLaunchdConfig = "LaunchdConfig"
 	optionOpenRCScript  = "OpenRCScript"
 
-	optionLogDirectory = "LogDirectory"
-	optionRestartSec   = "RestartSec"
+	optionLogDirectory       = "LogDirectory"
+	optionRestartSec         = "RestartSec"
+	optionStartLimitInterval = "StartLimitInterval"
+	optionStartLimitBurst    = "StartLimitBurst"
 )
 
 // Status represents service status as an byte value
