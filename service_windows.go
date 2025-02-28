@@ -358,7 +358,10 @@ func (ws *windowsService) Uninstall() error {
 	defer m.Disconnect()
 	s, err := m.OpenService(ws.Name)
 	if err != nil {
-		return fmt.Errorf("service %s is not installed", ws.Name)
+		if errno, ok := err.(syscall.Errno); ok && errno == errnoServiceDoesNotExist {
+			return ErrNotInstalled
+		}
+		return fmt.Errorf("Can't access service %s", ws.Name)
 	}
 	defer s.Close()
 	err = s.Delete()
